@@ -27,16 +27,13 @@ export default function MatrixBoot({ onDone }: { onDone: () => void }) {
     if (!canvas) return
     const ctx = canvas.getContext('2d')!
     
-    // Function to set canvas dimensions
     const setCanvasDimensions = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
     
-    // Initial setup
     setCanvasDimensions()
     
-    // Handle window resize
     const handleResize = () => {
       setCanvasDimensions()
     }
