@@ -21,13 +21,28 @@ export default function MatrixBoot({ onDone }: { onDone: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [phase, setPhase] = useState<'matrix' | 'text'>('matrix')
   const [textLines, setTextLines] = useState<string[]>([])
-
+  
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')!
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    
+    // Function to set canvas dimensions
+    const setCanvasDimensions = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    
+    // Initial setup
+    setCanvasDimensions()
+    
+    // Handle window resize
+    const handleResize = () => {
+      setCanvasDimensions()
+    }
+    
+    window.addEventListener('resize', handleResize)
+    
     const chars = 'JARVIS01アイウエオカキクケコ日本語AI人工知能FREE₹0PRIVACY'
     const fontSize = 14
     const cols = Math.floor(canvas.width / fontSize)
@@ -47,7 +62,11 @@ export default function MatrixBoot({ onDone }: { onDone: () => void }) {
       frame++
       if (frame > 120) { clearInterval(interval); setPhase('text') }
     }, 33)
-    return () => clearInterval(interval)
+    
+    return () => {
+      clearInterval(interval)
+      window.removeEventListener('resize', handleResize)
+    }
   }, [])
 
   useEffect(() => {
