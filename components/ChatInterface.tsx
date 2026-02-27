@@ -21,7 +21,7 @@ export default function ChatInterface() {
       id: generateId(),
       role: "user",
       content: input,
-      timestamp: new Date(),
+      timestamp: Date.now(), // Changed from new Date() to Date.now()
       confidence: 1,
       emotion: "neutral",
       model: "user-input",
@@ -51,9 +51,9 @@ export default function ChatInterface() {
 
       const jarvisMessage: Message = {
         id: generateId(),
-        role: "jarvis", // 🔥 assistant नहीं, jarvis
+        role: "jarvis",
         content: data.reply || "No response",
-        timestamp: new Date(),
+        timestamp: Date.now(), // Changed from new Date() to Date.now()
         confidence: data.confidence ?? 0.9,
         emotion: data.emotion ?? "neutral",
         model: data.model ?? "jarvis-core",
